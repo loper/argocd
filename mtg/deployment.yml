@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mtg
+spec:
+  selector:
+    matchLabels:
+      app: mtg
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mtg
+    spec:
+      containers:
+        - name: mtg
+          image: registry.gitlab.com/loper/mtg:latest
+          imagePullPolicy: IfNotPresent
+          tty: true
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: gitlab

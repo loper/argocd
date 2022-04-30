@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mtg
+  labels:
+    name: mtg
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 40031
+  selector:
+    app: mtg
+  type: NodePort
