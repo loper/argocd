@@ -14,3 +14,7 @@ spec:
     path: example-assets/my-apps/app-1
     repoURL: https://github.com/loper/argocd.git
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

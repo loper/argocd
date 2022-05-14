@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: my-apps
+  name: 01-auto
 spec:
   destination:
-    namespace: default
+    namespace: auto
     server: "https://kubernetes.default.svc"
   source:
     path: example-assets/argocd-apps
@@ -15,3 +15,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
+
