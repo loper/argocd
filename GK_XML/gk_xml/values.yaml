@@ -7,7 +7,7 @@ name: gk_xml
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/loper/mtg
+  repository: registry.gitlab.com/loper/acn_gk_xml
   pullPolicy: IfNotPresent
   pullSecrets: gitlab
   tag: "latest"
