@@ -1,0 +1,17 @@
+# Default values for gk_xml.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: gk_xml
+
+replicaCount: 1
+
+image:
+  repository: registry.gitlab.com/loper/mtg
+  pullPolicy: IfNotPresent
+  pullSecrets: gitlab
+  tag: "latest"
+
+network:
+  port: 80
+  external_port: 40035
