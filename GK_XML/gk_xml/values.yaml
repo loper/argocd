@@ -9,7 +9,7 @@ replicaCount: 1
 image:
   repository: registry.gitlab.com/loper/acn_gk_xml
   pullPolicy: IfNotPresent
-  pullSecrets: gitlab
+  pullSecrets: gitlab-xml
   tag: "latest"
 
 network:
