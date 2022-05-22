@@ -20,5 +20,11 @@ spec:
           tty: true
           ports:
             - containerPort: {{ .Values.network.port }}
+          volumeMounts:
+            - mountPath: /home/gk/web/data
+              name: data
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}
+      volumes:
+        - name: data
+          hostPath: /data/xml
