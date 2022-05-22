@@ -21,7 +21,7 @@ spec:
           ports:
             - containerPort: {{ .Values.network.port }}
           volumeMounts:
-            - mountPath: /home/gk/web/data
+            - mountPath: /home/gk/data
               name: data
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}
