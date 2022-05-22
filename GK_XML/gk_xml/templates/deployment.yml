@@ -27,4 +27,5 @@ spec:
         - name: {{ .Values.image.pullSecrets }}
       volumes:
         - name: data
-          hostPath: /data/xml
+          hostPath: 
+            path: /data/xml
