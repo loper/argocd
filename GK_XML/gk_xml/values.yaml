@@ -10,8 +10,8 @@ image:
   repository: registry.gitlab.com/loper/acn_gk_xml
   pullPolicy: Always
   pullSecrets: gitlab-xml
-  tag: 1-2-0
+  tag: 1-3-0
 
 network:
   port: 5000
-  external_port: 40035
+  external_port: 40054
