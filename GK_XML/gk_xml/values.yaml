@@ -10,7 +10,7 @@ image:
   repository: registry.gitlab.com/loper/acn_gk_xml
   pullPolicy: Always
   pullSecrets: gitlab-xml
-  tag: 1-3-0
+  tag: latest
 
 network:
   port: 5000
