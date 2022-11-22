@@ -9,7 +9,9 @@ spec:
     - host: mtg.anoia.eu
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Prefix
+            backend:
               # serviceName: mtg
               # servicePort: 80
               service:
