@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: mtg
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -15,10 +15,29 @@ spec:
     spec:
       containers:
         - name: mtg
-          image: registry.gitlab.com/loper/mtg:latest
+          image: registry.gitlab.com/loper/mtg:v1.1
           imagePullPolicy: IfNotPresent
           tty: true
           ports:
             - containerPort: 80
+          resources:
+            requests:
+              memory: "20Mi"
+              cpu: "100m"
+            limits:
+              memory: "50Mi"
+              cpu: "200m"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 60
       imagePullSecrets:
         - name: gitlab
