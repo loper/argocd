@@ -42,8 +42,8 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
 
-      securityContext:
-        runAsNonRoot: true
+      # securityContext:
+      #   runAsNonRoot: true
 
       imagePullSecrets:
         - name: gitlab
