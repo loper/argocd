@@ -17,6 +17,8 @@ spec:
         - name: {{ .Values.image_A.name }}
           image: "{{ .Values.image_A.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [ "/bin/bash", "-c", "--" ]
+          args: [ "while true; do sleep 30; done;" ]
           tty: true
           envFrom:
             - configMapRef:
