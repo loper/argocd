@@ -5,6 +5,6 @@ metadata:
   name: config-01 
 data:
   VAULT_ADDR: "{{ .Values.vault.addr }}"
-  VAULT_MOUNTPOINT: "{{ .Values.vault.mountpoint }}"
+  VAULT_MOUNT_POINT: "{{ .Values.vault.mountpoint }}"
   VAULT_COMMON: "{{ .Values.vault.common }}"
   VAULT_PATH: "{{ .Values.vault.path_01 }}"
