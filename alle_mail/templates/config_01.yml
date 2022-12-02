@@ -4,7 +4,7 @@ apiVersion: v1
 metadata:
   name: config-01 
 data:
-  vault_addr: "{{ .Values.vault.addr }}"
-  vault_mountpoint: "{{ .Values.vault.mountpoint }}"
-  vault_common: "{{ .Values.vault.common }}"
-  vault_path: "{{ .Values.vault.path_01 }}"
+  VAULT_ADDR: "{{ .Values.vault.addr }}"
+  VAULT_MOUNTPOINT: "{{ .Values.vault.mountpoint }}"
+  VAULT_COMMON: "{{ .Values.vault.common }}"
+  VAULT_PATH: "{{ .Values.vault.path_01 }}"
