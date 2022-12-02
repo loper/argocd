@@ -20,9 +20,9 @@ spec:
           tty: true
           envFrom:
             - configMapRef:
-              name: {{ .Values.image_A.cm }}
+                name: {{ .Values.image_A.cm }}
             - secretRef:
-              name: {{ .Values.image_A.secret }}
+                name: {{ .Values.image_A.secret }}
           resources:
             requests:
               memory: {{ .Values.limits.mem_min }}
