@@ -21,17 +21,17 @@ image:
   pullSecrets: gitlab
 
 image_A:
-  name: 01_mail
+  name: 01-mail
   repository: registry.gitlab.com/k8s45/alle_mail/01_mail
   cm: config-01
   secret: token-01
 
 image_B:
-  name: 02_parser
+  name: 02-parser
   repository: registry.gitlab.com/k8s45/alle_mail/02_parser
 
 image_C:
-  name: 03_atable
+  name: 03-atable
   repository: registry.gitlab.com/k8s45/alle_mail/03_atable
 
 vault:
