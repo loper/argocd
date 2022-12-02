@@ -4,7 +4,7 @@
 
 name: alle-mail
 namespace: alle-uat
-replicaCount: 2
+replicaCount: 0
 
 app:
   log_file: "/home/mailer/log/output.log"
