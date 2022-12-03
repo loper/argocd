@@ -31,14 +31,14 @@ image_B:
   repository: registry.gitlab.com/k8s45/alle_mail/02_parser
   cm: config-02
   secret: token-02
-  replicas: 2
+  replicas: 1
 
 image_C:
   name: 03-atable
   repository: registry.gitlab.com/k8s45/alle_mail/03_atable
   cm: config-03
   secret: token-03
-  replicas: 3
+  replicas: 1
 
 vault:
   mount_point: "alle_dev"
