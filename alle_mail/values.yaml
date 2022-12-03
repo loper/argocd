@@ -4,7 +4,7 @@
 
 name: alle-mail
 namespace: alle-uat
-replicaCount: 0
+replicaCount: 1
 
 app:
   log_file: "/home/mailer/log/output.log"
@@ -29,14 +29,17 @@ image_A:
 image_B:
   name: 02-parser
   repository: registry.gitlab.com/k8s45/alle_mail/02_parser
+  cm: config-02
+  secret: token-02
 
 image_C:
   name: 03-atable
   repository: registry.gitlab.com/k8s45/alle_mail/03_atable
+  cm: config-03
+  secret: token-03
 
 vault:
-  addr: "http://srv09.mikr.us:30256"
-  mountpoint: "alle_dev"
+  mount_point: "alle_dev"
   common: "common"
   path_01: "mail"
   path_02: null

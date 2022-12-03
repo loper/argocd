@@ -34,6 +34,9 @@ spec:
               cpu: {{ .Values.limits.cpu_max }}
           securityContext:
             allowPrivilegeEscalation: false
+            runAsUser: 500
+            runAsGroup: 4
+            fsGroup: 500
           livenessProbe:
             exec:
               command:
