@@ -17,5 +17,5 @@ spec:
               service:
                 name: {{ .Values.name }}
                 port: 
-                  number: {{ .Values.image_D.internal_port }}
+                  number: {{ .Values.image_D.external_port }}
 
