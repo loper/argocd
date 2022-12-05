@@ -15,7 +15,7 @@ limits:
   cpu_max: "500m"
 
 image:
-  tag: e228abbc
+  tag: fa3186e9
   pullPolicy: Always
   pullSecrets: gitlab
 
@@ -40,9 +40,20 @@ image_C:
   secret: token-03
   replicas: 1
 
+image_D:
+  name: 04-status
+  repository: registry.gitlab.com/k8s45/alle_mail/04_status
+  cm: config-04
+  secret: token-04
+  replicas: 1
+  internal_port: 5000
+  external_port: 40054
+  health_probe: /health
+
 vault:
   mount_point: "alle_dev"
   common: "common"
   path_01: "mail"
   path_02: null
   path_03: "airtable"
+  path_04: null
