@@ -7,9 +7,9 @@ metadata:
     name: {{ .Values.name }}
 spec:
   ports:
-    - port: {{ .Values.image_D.internal_port }}
+    - ports:
       targetPort: {{ .Values.image_D.internal_port }}
-      nodePort: {{ .Values.image_D.external_port }}
+      port: {{ .Values.image_D.external_port }}
   selector:
     app: {{ .Values.image_D.name }}
-  type: NodePort
+  type: ClusterIP
