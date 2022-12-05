@@ -11,5 +11,5 @@ spec:
       targetPort: {{ .Values.image_D.internal_port }}
       nodePort: {{ .Values.image_D.external_port }}
   selector:
-    app: {{ .Values.name }}
+    app: {{ .Values.image_D.name }}
   type: NodePort
