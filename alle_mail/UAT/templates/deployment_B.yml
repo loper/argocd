@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.image_B.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.image_B.name }}
+  replicas: {{ .Values.image_B.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.image_B.name }}
+    spec:
+      containers:
+        - name: {{ .Values.image_B.name }}
+          image: "{{ .Values.image_B.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # command: [ "/bin/sh", "-c", "--" ]
+          # args: [ "while true; do sleep 30; done;" ]
+          tty: true
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.image_B.cm }}
+            - secretRef:
+                name: {{ .Values.image_B.secret }}
+          resources:
+            requests:
+              memory: {{ .Values.limits.mem_min }}
+              cpu: {{ .Values.limits.cpu_min }}
+            limits:
+              memory: {{ .Values.limits.mem_max }}
+              cpu: {{ .Values.limits.cpu_max }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 500
+            runAsGroup: 10500
+          livenessProbe:
+            exec:
+              command:
+                - tail
+                - {{ .Values.app.log_file }}
+            initialDelaySeconds: 10
+            periodSeconds: 55
+
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecrets }}

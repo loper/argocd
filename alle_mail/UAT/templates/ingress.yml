@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-fanout
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: "{{ .Values.namespace }}.anoia.eu"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              # serviceName: mtg
+              # servicePort: 80
+              service:
+                name: {{ .Values.name }}
+                port: 
+                  number: {{ .Values.image_D.external_port }}
+

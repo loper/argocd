@@ -1,0 +1,59 @@
+# Default values for gk_xml.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: alle-mail
+namespace: alle-mail
+
+app:
+  log_file: "/home/mailer/log/output.log"
+
+limits:
+  mem_min: "50Mi"
+  mem_max: "150Mi"
+  cpu_min: "100m"
+  cpu_max: "500m"
+
+image:
+  tag: fa3186e9
+  pullPolicy: Always
+  pullSecrets: gitlab
+
+image_A:
+  name: 01-mail
+  repository: registry.gitlab.com/k8s45/alle_mail/01_mail
+  cm: config-01
+  secret: token-01
+  replicas: 1
+
+image_B:
+  name: 02-parser
+  repository: registry.gitlab.com/k8s45/alle_mail/02_parser
+  cm: config-02
+  secret: token-02
+  replicas: 2
+
+image_C:
+  name: 03-atable
+  repository: registry.gitlab.com/k8s45/alle_mail/03_atable
+  cm: config-03
+  secret: token-03
+  replicas: 2
+
+image_D:
+  name: 04-status
+  repository: registry.gitlab.com/k8s45/alle_mail/04_status
+  cm: config-04
+  secret: token-04
+  replicas: 2
+  internal_port: 5000
+  external_port: 40055
+  health_probe: /health
+
+vault:
+  mount_point: "alle"
+  common: "common"
+  path_01: "mail"
+  path_02: null
+  path_03: "airtable"
+  path_04: null
