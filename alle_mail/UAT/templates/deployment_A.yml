@@ -44,15 +44,8 @@ spec:
                 - {{ .Values.app.log_file }}
             initialDelaySeconds: 10
             periodSeconds: 55
-      affinity:
-        Node affinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - k102                                   
-                    
+      nodeSelector:
+        kubernetes.io/hostname: k102
+
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}
