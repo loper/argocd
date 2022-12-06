@@ -4,6 +4,7 @@
 
 name: alle-mail
 namespace: alle-uat
+node: k102
 
 app:
   log_file: "/home/mailer/log/output.log"

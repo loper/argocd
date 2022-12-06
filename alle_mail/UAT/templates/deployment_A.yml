@@ -45,7 +45,7 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 55
       nodeSelector:
-        kubernetes.io/hostname: k102
+        kubernetes.io/hostname: {{ .Values.node }}
 
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}

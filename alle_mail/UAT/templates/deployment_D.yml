@@ -49,6 +49,8 @@ spec:
               port: {{ .Values.image_D.internal_port }}
             initialDelaySeconds: 10
             periodSeconds: 60
-
+      nodeSelector:
+        kubernetes.io/hostname: {{ .Values.node }}
+        
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}
