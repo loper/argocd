@@ -1,7 +1,7 @@
 # Default values for gk_xml.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
+ 
 name: alle-mail
 namespace: alle-uat
 node: k102
@@ -16,7 +16,7 @@ limits:
   cpu_max: "500m"
 
 image:
-  tag: "2d9a2f36"
+  tag: "25da840c"
   pullPolicy: Always
   pullSecrets: gitlab
 
