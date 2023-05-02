@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localpro
+  labels:
+    app: localpro
+spec:
+  selector:
+    matchLabels:
+      app: localpro
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: localpro
+    spec:
+      containers:
+        - name: localpro
+          image: nginx:stable
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html/
+              name: ng-data
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 100m
+            limits:
+              memory: 100Mi
+              cpu: 300m
+      volumes:
+        - name: ng-data
+          persistentVolumeClaim:
+            claimName: pro-pvc

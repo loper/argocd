@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localpro-svc
+spec:
+  selector:
+    app: localpro
+  type: NodePort
+  ports:
+    - name: ng
+      port: 80
+      targetPort: 80
+      nodePort: 30111
