@@ -4,4 +4,4 @@ apiVersion: v1
 metadata:
   name: config-05
 data:
-  REPEATER: True
+  REPEATER: "True"
