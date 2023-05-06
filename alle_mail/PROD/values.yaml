@@ -50,6 +50,11 @@ image_D:
   external_port: 40055
   health_probe: /health
 
+image_E:
+  name: 05-repeater
+  cm: config-05
+  replicas: 1
+  
 vault:
   mount_point: "alle"
   common: "common"
