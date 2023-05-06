@@ -16,7 +16,7 @@ limits:
   cpu_max: "500m"
 
 image:
-  tag: "3748b35a"
+  tag: "99f7a05c"
   pullPolicy: Always
   pullSecrets: gitlab
 
@@ -50,6 +50,11 @@ image_D:
   internal_port: 5000
   external_port: 40054
   health_probe: /health
+
+image_E:
+  name: 05-repeater
+  cm: config-05
+  replicas: 1
 
 vault:
   mount_point: "alle_dev"
