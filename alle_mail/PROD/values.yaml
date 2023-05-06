@@ -15,7 +15,7 @@ limits:
   cpu_max: "500m"
 
 image:
-  tag: "3748b35a"
+  tag: "ae64834f"
   pullPolicy: Always
   pullSecrets: gitlab
 
@@ -54,7 +54,7 @@ image_E:
   name: 05-repeater
   cm: config-05
   replicas: 1
-  
+
 vault:
   mount_point: "alle"
   common: "common"
