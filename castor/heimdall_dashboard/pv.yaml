@@ -10,3 +10,4 @@ spec:
   accessModes:
     - ReadWriteMany # < Multiple pods can write to storage
   persistentVolumeReclaimPolicy: Retain # < The persistent volume can reclaimed
+  volumeMode: Filesystem
