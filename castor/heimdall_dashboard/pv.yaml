@@ -15,5 +15,5 @@ spec:
     - nfsvers=4.1
   nfs:
     server: 192.168.128.222 # < IP number of your NFS server
-    path: "/volume1/k3s_dante/heimdall_dash" # < Name of your NFS share with subfolder
+    path: "/volume1/k3s_dante" # < Name of your NFS share with subfolder
     readOnly: false
