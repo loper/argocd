@@ -4,8 +4,10 @@ metadata:
   name: heimdall-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: local-path
   resources:
     requests:
       storage: 1Gi
+  volumeName: heimdall-pv-lo
+  volumeMode: Filesystem
