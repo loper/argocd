@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain # < The persistent volume can reclaimed
   mountOptions: # < Mount options specific for nfs 4.1, remove if version < 4.1 nfs server is used
     - hard
-    - nfsvers=4.1
+    - nfsvers=4
   nfs:
     server: 192.168.128.222 # < IP number of your NFS server
     path: "/volume1/k3s_dante" # < Name of your NFS share with subfolder
