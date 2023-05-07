@@ -7,3 +7,4 @@ data:
   VAULT_MOUNT_POINT: "{{ .Values.vault.mount_point }}"
   VAULT_COMMON: "{{ .Values.vault.common }}"
   VAULT_PATH: "{{ .Values.vault.path_02 }}"
+  TZ: "{{ .Values.TZ }}"

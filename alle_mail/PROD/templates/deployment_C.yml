@@ -20,9 +20,6 @@ spec:
           # command: [ "/bin/sh", "-c", "--" ]
           # args: [ "while true; do sleep 30; done;" ]
           tty: true
-          env:
-            - name: TZ
-                value: {{ .Values.TZ }}
           envFrom:
             - configMapRef:
                 name: {{ .Values.image_C.cm }}

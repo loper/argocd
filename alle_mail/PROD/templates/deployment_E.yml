@@ -18,9 +18,6 @@ spec:
           image: "{{ .Values.image_B.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           tty: true
-          env:
-            - name: TZ
-                value: {{ .Values.TZ }}
           envFrom:
             - configMapRef:
                 name: {{ .Values.image_E.cm }}
