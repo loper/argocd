@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: heimdall-pvc        # < name of the persistent volume claim ("pvc'")
+  namespace: utils       # < namespace where place the pvc
+
+spec:
+  storageClassName: "" 
+  volumeName: heimdall-pv-nfs # < the pv it will "claim" to storage. Created in the previous yaml.
+  accessModes:
+    - ReadWriteMany         # < Multiple pods can write to storage. Same value as pv
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi          # < How much data can the pvc claim from pv
