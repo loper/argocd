@@ -4,6 +4,7 @@
 
 name: alle-mail
 namespace: alle-mail
+TZ: Europe/Warsaw
 
 app:
   log_file: "/home/mailer/log/output.log"
