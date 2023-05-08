@@ -15,5 +15,5 @@ spec:
             backend:
               service:
                 name: heim-svc
-                port: 
+                port:
                   number: 80
