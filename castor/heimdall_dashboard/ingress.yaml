@@ -4,15 +4,15 @@ metadata:
   name: heimdall-ingress
   namespace: utils
   annotations:
-    # nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
     - host: castor.oke
       http:
         paths:
-          - path: /heimdall
+          - path: /
             pathType: Prefix
             backend:
               service:
