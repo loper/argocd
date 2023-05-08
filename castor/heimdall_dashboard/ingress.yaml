@@ -17,4 +17,4 @@ spec:
               service:
                 name: heim-svc
                 port:
-                  number: 80
+                  number: 8081
