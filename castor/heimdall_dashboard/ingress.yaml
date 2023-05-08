@@ -10,7 +10,7 @@ spec:
     - host: castor.oke # < hostname to access the heimdall
       http:
         paths:
-          - path: /heimdall
+          - path: /
             pathType: Prefix
             backend:
               service:
