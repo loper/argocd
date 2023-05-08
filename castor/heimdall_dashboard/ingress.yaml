@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: heimdall-ingress # < name of ingress entry
+  namespace: utils # < namespace where place the deployment and pods
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: castor.oke # < hostname to access the heimdall
+      http:
+        paths:
+          - path: /heimdall
+            pathType: Prefix
+            backend:
+              service:
+                name: heim-svc
+                port: 
+                  number: 80
