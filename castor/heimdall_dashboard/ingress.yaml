@@ -1,16 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: heimdall-ingress # < name of ingress entry
-  namespace: utils # < namespace where place the deployment and pods
+  name: heimdall-ingress
+  namespace: utils
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
+  ingressClassName: nginx
   rules:
-    - host: castor.oke # < hostname to access the heimdall
+    - host: castor.oke
       http:
         paths:
-          - path: /
+          - path: /heimdall
             pathType: Prefix
             backend:
               service:
