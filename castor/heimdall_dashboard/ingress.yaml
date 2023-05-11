@@ -15,6 +15,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: heim-svc
+                name: heim-svc-ci
                 port:
-                  number: 8081
+                  number: 80
