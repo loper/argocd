@@ -8,7 +8,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-    - host: castor.oke
+    - host: baldur.oke
       http:
         paths:
           - path: /
