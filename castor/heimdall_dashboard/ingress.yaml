@@ -18,3 +18,10 @@ spec:
                 name: heim-svc-ci
                 port:
                   number: 8888
+          - path: /kuma
+            pathType: Prefix
+            backend:
+              service:
+                name: kuma-uptime-kuma
+                port:
+                  number: 3001
