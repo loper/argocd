@@ -4,7 +4,7 @@ metadata:
   name: utils-ingress
   namespace: utils
   annotations:
-    # nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: "traefik"
     traefik.frontend.passHostHeader: "true"
     traefik.backend.loadbalancer.sticky: "true"
@@ -13,17 +13,17 @@ spec:
     - host: castor.oke
       http:
         paths:
-          - path: /
-            # pathType: Prefix
-            backend:
-              service:
-                name: heim-svc-ci
-                port:
-                  number: 8888
-          - path: /kuma
-            # pathType: Exact
+          - path: /kuma/*
+            pathType: Prefix
             backend:
               service:
                 name: kuma-uptime-kuma
                 port:
                   number: 3001
+          - path: /*
+            pathType: Prefix
+            backend:
+              service:
+                name: heim-svc-ci
+                port:
+                  number: 8888
