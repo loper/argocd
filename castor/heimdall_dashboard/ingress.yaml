@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: utils-ingress
+  namespace: utils
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "traefik"
+    traefik.frontend.passHostHeader: "true"
+    traefik.backend.loadbalancer.sticky: "true"
+spec:
+  rules:
+    - host: kuma.castor.oke
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kuma-uptime-kuma
+                port:
+                  number: 3001
+    - host: castor.oke
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: heim-svc-ci
+                port:
+                  number: 8888
