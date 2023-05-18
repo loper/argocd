@@ -21,7 +21,7 @@ spec:
                 port:
                   number: 3001
           - path: /
-            # pathType: Prefix
+            pathType: Prefix
             backend:
               service:
                 name: heim-svc-ci
