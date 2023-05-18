@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: heim-ingress
+  name: utils-ingress
   namespace: utils
   annotations:
     # nginx.ingress.kubernetes.io/rewrite-target: /
@@ -12,14 +12,14 @@ spec:
       http:
         paths:
           - path: /
-            pathType: Prefix
+            pathType: Exact
             backend:
               service:
                 name: heim-svc-ci
                 port:
                   number: 8888
           - path: /kuma
-            pathType: Prefix
+            pathType: Exact
             backend:
               service:
                 name: kuma-uptime-kuma
