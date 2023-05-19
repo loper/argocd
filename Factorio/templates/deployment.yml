@@ -35,6 +35,9 @@ spec:
             runAsNonRoot: true
             runAsUser: 845
             runAsGroup: 845
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.net.internal_port }}
           # livenessProbe:
           #   exec:
           #     command:
