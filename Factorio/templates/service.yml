@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    name: {{ .Values.name }}
+spec:
+  type: NodePort
+  ports:
+    - name: access
+      targetPort: {{ .Values.net.internal_port }}
+      port: {{ .Values.net.external_port }}
+
+    - name: data
+      protocol: UDP
+      targetPort: {{ .Values.net.internal_port_udp }}
+      port: {{ .Values.net.external_port_udp }}
+
+  selector:
+    app: {{ .Values.name }}

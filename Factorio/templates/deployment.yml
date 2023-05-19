@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  replicas: {{ .Values.image.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      containers:
+        - name: {{ .Values.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          tty: true
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.image.cm }}
+          resources:
+            requests:
+              memory: {{ .Values.limits.mem_min }}
+              cpu: {{ .Values.limits.cpu_min }}
+            limits:
+              memory: {{ .Values.limits.mem_max }}
+              cpu: {{ .Values.limits.cpu_max }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 500
+            runAsGroup: 10500
+          livenessProbe:
+            exec:
+              command:
+                - tail
+                - {{ .Values.app.log_file }}
+            initialDelaySeconds: 10
+            periodSeconds: 55
+

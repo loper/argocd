@@ -1,0 +1,32 @@
+# Default values for gk_xml.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+ 
+name: factorio
+namespace: games
+TZ: Europe/Warsaw
+
+app:
+  log_file: "/factorio/factorio_current.log"
+
+limits:
+  mem_min: "1000Mi"
+  mem_max: "5500Mi"
+  cpu_min: "100m"
+  cpu_max: "2000m"
+
+image:
+  repository: "factoriotools/factorio"
+  tag: "1.1.80"
+  pullPolicy: IfNotPresent
+  replicas: 1
+  cm: "config"
+
+net:
+  internal_port: 27015
+  external_port: 27015
+  internal_port_udp: 34197
+  external_port_udp: 34197
+
+game:
+  update_mods: "false"

@@ -1,0 +1,8 @@
+---
+kind: ConfigMap 
+apiVersion: v1 
+metadata:
+  name: config
+data:
+  TZ: "{{ .Values.TZ }}"
+  UPDATE_MODS_ON_START: "{{ .Values.game.update_mods }}"
