@@ -4,6 +4,11 @@ kind: Deployment
 metadata:
   name: {{ .Values.name }}
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   selector:
     matchLabels:
       app: {{ .Values.name }}
