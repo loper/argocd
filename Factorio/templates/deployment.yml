@@ -39,7 +39,7 @@ spec:
             tcpSocket:
               port: {{ .Values.net.internal_port }}
             periodSeconds: 244
-            initialDelaySeconds: 123
+            initialDelaySeconds: 20
           # livenessProbe:
           #   exec:
           #     command:
