@@ -38,6 +38,8 @@ spec:
           readinessProbe:
             tcpSocket:
               port: {{ .Values.net.internal_port }}
+              periodSeconds: 244
+              initialDelaySeconds: 123
           # livenessProbe:
           #   exec:
           #     command:
