@@ -23,6 +23,7 @@ image:
   cm: "config"
 
 net:
+  conn_port: 30303
   internal_port: 27015
   external_port: 27015
   internal_port_udp: 34197

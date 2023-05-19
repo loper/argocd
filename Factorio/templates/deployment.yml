@@ -31,7 +31,8 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: false
-            # runAsUser: 500
+            runAsUser: 500
+            runAsGroup: 500
             # runAsGroup: 10500
           livenessProbe:
             exec:

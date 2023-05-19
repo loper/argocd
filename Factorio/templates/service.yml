@@ -16,6 +16,7 @@ spec:
       protocol: UDP
       targetPort: {{ .Values.net.internal_port_udp }}
       port: {{ .Values.net.external_port_udp }}
+      nodePort: {{ .Values.net.conn_port }}
 
   selector:
     app: {{ .Values.name }}
