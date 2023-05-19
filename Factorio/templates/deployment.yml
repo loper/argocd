@@ -2,32 +2,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.name }}
+  name: { { .Values.name } }
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.name }}
-  replicas: {{ .Values.image.replicas }}
+      app: { { .Values.name } }
+  replicas: { { .Values.image.replicas } }
   template:
     metadata:
       labels:
-        app: {{ .Values.name }}
+        app: { { .Values.name } }
     spec:
       containers:
-        - name: {{ .Values.name }}
+        - name: { { .Values.name } }
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: { { .Values.image.pullPolicy } }
           tty: true
           envFrom:
             - configMapRef:
-                name: {{ .Values.image.cm }}
+                name: { { .Values.image.cm } }
           resources:
             requests:
-              memory: {{ .Values.limits.mem_min }}
-              cpu: {{ .Values.limits.cpu_min }}
+              memory: { { .Values.limits.mem_min } }
+              cpu: { { .Values.limits.cpu_min } }
             limits:
-              memory: {{ .Values.limits.mem_max }}
-              cpu: {{ .Values.limits.cpu_max }}
+              memory: { { .Values.limits.mem_max } }
+              cpu: { { .Values.limits.cpu_max } }
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -37,7 +37,13 @@ spec:
             exec:
               command:
                 - tail
-                - {{ .Values.app.log_file }}
+                - { { .Values.app.log_file } }
             initialDelaySeconds: 10
             periodSeconds: 55
-
+          volumeMounts:
+            - mountPath: "{{ .Values.storage.mountpoint }}"
+              name: data
+      volumes:
+        - name: data
+          hostPath:
+            path: "{{ .Values.storage.host_path }}"

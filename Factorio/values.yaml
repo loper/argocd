@@ -1,7 +1,7 @@
 # Default values for gk_xml.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
- 
+
 name: factorio
 namespace: games
 TZ: Europe/Warsaw
@@ -30,3 +30,7 @@ net:
 
 game:
   update_mods: "false"
+
+storage:
+  host_path: "/opt/FACTORIO/k8s"
+  mountpoint: "/factorio"
