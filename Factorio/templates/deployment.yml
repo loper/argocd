@@ -35,13 +35,13 @@ spec:
             runAsNonRoot: true
             runAsUser: 845
             runAsGroup: 845
-          livenessProbe:
-            exec:
-              command:
-                - tail
-                - {{ .Values.app.log_file }}
-            initialDelaySeconds: 100
-            periodSeconds: 550
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - tail
+          #       - {{ .Values.app.log_file }}
+          #   initialDelaySeconds: 100
+          #   periodSeconds: 550
           volumeMounts:
             - mountPath: {{ .Values.storage.mountpoint }}
               name: data
