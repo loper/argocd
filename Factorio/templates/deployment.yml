@@ -15,6 +15,8 @@ spec:
     spec:
       containers:
         - name: {{ .Values.name }}
+          command: ["/bin/sh"]
+          args: ["-c", "while true; do echo hello; sleep 100; done"]
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           tty: true
@@ -33,14 +35,13 @@ spec:
             runAsNonRoot: false
             runAsUser: 500
             runAsGroup: 500
-            # runAsGroup: 10500
-          livenessProbe:
-            exec:
-              command:
-                - tail
-                - {{ .Values.app.log_file }}
-            initialDelaySeconds: 10
-            periodSeconds: 55
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - tail
+          #       - {{ .Values.app.log_file }}
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 55
           volumeMounts:
             - mountPath: {{ .Values.storage.mountpoint }}
               name: data
