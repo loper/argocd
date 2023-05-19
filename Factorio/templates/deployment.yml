@@ -29,7 +29,7 @@ spec:
               memory: {{ .Values.limits.mem_max }}
               cpu: {{ .Values.limits.cpu_max }}
           securityContext:
-            allowPrivilegeEscalation: false
+            allowPrivilegeEscalation: true
             runAsNonRoot: false
             runAsUser: 500
             runAsGroup: 500
