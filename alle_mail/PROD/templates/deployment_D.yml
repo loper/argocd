@@ -25,6 +25,9 @@ spec:
                 name: {{ .Values.image_D.cm }}
             - secretRef:
                 name: {{ .Values.image_D.secret }}
+          env:
+            - name: IMAGE_TAG
+              value: {{ .Values.image.tag }}
           resources:
             requests:
               memory: {{ .Values.limits.mem_min }}
