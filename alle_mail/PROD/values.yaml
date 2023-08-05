@@ -11,7 +11,7 @@ app:
 
 limits:
   mem_min: "50Mi"
-  mem_max: "150Mi"
+  mem_max: "550Mi"
   cpu_min: "100m"
   cpu_max: "500m"
 
