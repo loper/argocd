@@ -37,13 +37,13 @@ spec:
             runAsNonRoot: true
             runAsUser: 500
             runAsGroup: 10500
-          livenessProbe:
-            exec:
-              command:
-                - tail
-                - {{ .Values.app.log_file }}
-            initialDelaySeconds: 10
-            periodSeconds: 55
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - tail
+          #       - {{ .Values.app.log_file }}
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 55
 
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}
