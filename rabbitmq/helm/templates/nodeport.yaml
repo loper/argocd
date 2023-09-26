@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Chart.Name }}-np"
+  namespace: {{ .Values.namespace }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ .Chart.Name }}
+  ports:
+    - name: port-queue
+      protocol: TCP
+      port: 5672
+      targetPort: 5672
+      nodePort: {{ .Values.service.webPort }}
+    - name: port-web
+      protocol: TCP
+      port: 15672
+      targetPort: 15672
+      nodePort: {{ .Values.service.queuePort }}

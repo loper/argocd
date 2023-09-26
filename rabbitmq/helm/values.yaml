@@ -1,0 +1,42 @@
+# Default values for rabbit.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: utils
+replicaCount: 1
+
+image:
+  repository: rabbitmq
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "3-management"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: NodePort
+  webPort: 34672
+  queuePort: 35672
+
+storage:
+  size: 3Gi
+  class: local-path
+  accessMode: ReadWriteMany
+  dataPath: /var/lib/rancher/k3s/storage
+  dbPath: /var/lib/rabbitmq/mnesia
+
+secrets:
+  rabbitmqUsername: "abc"
+  rabbitmqPassword: "defg"
+  name: "rabbit-pass"
