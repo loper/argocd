@@ -13,9 +13,9 @@ spec:
       protocol: TCP
       port: 5672
       targetPort: 5672
-      nodePort: {{ .Values.service.webPort }}
+      nodePort: {{ .Values.service.queuePort }}
     - name: port-web
       protocol: TCP
       port: 15672
       targetPort: 15672
-      nodePort: {{ .Values.service.queuePort }}
+      nodePort: {{ .Values.service.webPort }}
