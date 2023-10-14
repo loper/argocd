@@ -1,7 +1,7 @@
 # Default values for gk_xml.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
- 
+
 name: alle-mail
 namespace: alle-uat
 node: k102
@@ -17,7 +17,7 @@ limits:
   cpu_max: "500m"
 
 image:
-  tag: 'e81744e2'
+  tag: "35af3bee"
   pullPolicy: Always
   pullSecrets: gitlab
 
@@ -56,6 +56,13 @@ image_E:
   name: 05-repeater
   cm: config-05
   replicas: 1
+
+image_F:
+  name: 06-tracker
+  repository: registry.gitlab.com/k8s45/alle_mail/06-tracker
+  cm: config-04
+  secret: token-04
+  schedule: "*/52 * * * *" # every 52 minutes
 
 vault:
   mount_point: "alle_dev"
