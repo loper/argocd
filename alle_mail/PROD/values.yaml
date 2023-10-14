@@ -5,7 +5,7 @@
 name: alle-mail
 namespace: alle-mail
 TZ: Europe/Warsaw
-node: "*"
+node: "k141"
 
 app:
   log_file: "/home/mailer/log/output.log"
