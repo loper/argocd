@@ -37,7 +37,7 @@ spec:
                   runAsUser: 500
                   runAsGroup: 10500
           nodeSelector:
-            kubernetes.io/hostname: {{ .Values.node }}
+            kubernetes.io/hostname: "{{ .Values.node }}"
             
           imagePullSecrets:
             - name: {{ .Values.image.pullSecrets }}
