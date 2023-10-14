@@ -60,8 +60,8 @@ image_E:
 image_F:
   name: 06-tracker
   repository: registry.gitlab.com/k8s45/alle_mail/06_tracker
-  cm: config-04
-  secret: token-04
+  cm: config-03
+  secret: token-03
   schedule: "*/52 * * * *" # every 52 minutes
 
 vault:
