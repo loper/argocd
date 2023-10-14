@@ -63,6 +63,7 @@ image_F:
   cm: config-03
   secret: token-03
   schedule: "0 */3 * * *" # every 3 hours
+  suspend: false
 
 vault:
   mount_point: "alle_dev"
