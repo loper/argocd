@@ -4,8 +4,9 @@
 
 name: alle-mail
 namespace: alle-uat
-node: k102
 TZ: Europe/Warsaw
+node: "k102"
+node_mail: "k141"
 
 app:
   log_file: "/home/mailer/log/output.log"
