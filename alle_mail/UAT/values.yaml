@@ -7,6 +7,7 @@ namespace: alle-uat
 TZ: Europe/Warsaw
 node: "k102"
 node_mail: "k141"
+revisionHistoryLimit: 2
 
 app:
   log_file: "/home/mailer/log/output.log"

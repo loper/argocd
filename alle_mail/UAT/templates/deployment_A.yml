@@ -49,3 +49,5 @@ spec:
 
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}
+
+      revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
