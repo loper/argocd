@@ -7,9 +7,9 @@ metadata:
 spec:
   accessModes: 
      - {{ .Values.storage.accessMode }}
-  storageClassName: {{ .Values.storage.class }}
+  storageClassName: {{ .Values.storage.class_ext }}
   resources:
     requests:
       storage: {{ .Values.storage.size }}
-  volumeName: "{{ .Chart.Name }}-pv-lo"
-  volumeMode: Filesystem
+  # volumeName: "{{ .Chart.Name }}-pv-lo"
+  # volumeMode: Filesystem
