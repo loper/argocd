@@ -33,7 +33,7 @@ storage:
   size: 3Gi
   class: local-path
   class_ext: longhorn
-  accessMode: ReadWriteMany
+  accessMode: ReadWriteOnce
   dataPath: /var/lib/rancher/k3s/storage
   dbPath: /var/lib/rabbitmq/mnesia
 
