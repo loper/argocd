@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "{{ .Chart.Name }}-pv-lo"
+  namespace: {{ .Values.namespace }}
+spec:
+  storageClassName: {{ .Values.storage.class }}
+  capacity:
+    storage: {{ .Values.storage.size }}
+  hostPath:
+    path: >-
+      {{ .Values.storage.dataPath }}/pvc-{{ .Chart.Name }}
+    type: DirectoryOrCreate
+  accessModes: 
+    - {{ .Values.storage.accessMode }}
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem

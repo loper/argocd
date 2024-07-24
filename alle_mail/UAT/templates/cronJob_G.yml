@@ -1,0 +1,45 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.image_G.name }}
+spec:
+  schedule: "{{ .Values.image_G.schedule }}"
+  jobTemplate:
+    spec:
+      suspend: {{ .Values.image_G.suspend }}
+      ttlSecondsAfterFinished: 3000
+      template:
+        spec:
+          containers:
+              - name: {{ .Values.image_G.name }}
+                image: "{{ .Values.image_G.repository }}:{{ .Values.image.tag }}"
+                imagePullPolicy: {{ .Values.image.pullPolicy }}
+                tty: true
+                envFrom:
+                  - configMapRef:
+                      name: {{ .Values.image_G.cm }}
+                  - secretRef:
+                      name: {{ .Values.image_G.secret }}
+                env:
+                  - name: IMAGE_TAG
+                    value: {{ .Values.image.tag }}
+                resources:
+                  requests:
+                    memory: {{ .Values.limits.mem_min }}
+                    cpu: {{ .Values.limits.cpu_min }}
+                  limits:
+                    memory: {{ .Values.limits.mem_max }}
+                    cpu: {{ .Values.limits.cpu_max }}
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  runAsNonRoot: true
+                  runAsUser: 500
+                  runAsGroup: 10500
+          # nodeSelector:
+          #   kubernetes.io/hostname: "{{ .Values.node }}"
+            
+          imagePullSecrets:
+            - name: {{ .Values.image.pullSecrets }}
+            
+          restartPolicy: Never

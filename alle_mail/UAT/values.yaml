@@ -67,6 +67,14 @@ image_F:
   schedule: "0 */3 * * *" # every 3 hours
   suspend: false
 
+image_G:
+  name: 07-resync
+  repository: registry.gitlab.com/k8s45/alle_mail/07_resync
+  cm: config-03
+  secret: token-03
+  schedule: "0 */2 * * *" # every 2 hours
+  suspend: false
+
 vault:
   mount_point: "alle_dev"
   common: "common"
