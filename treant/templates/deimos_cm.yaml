@@ -6,7 +6,7 @@ metadata:
 data:
   TZ: "Europe/Warsaw"
   APP: "treant"
-  DEPLOYMENT: "treant-acd"
+  DEPLOYMENT: "treant"
   GIT_USER: "loper"
   MAX_WAIT: "40"
   NAMESPACE: "treants"
