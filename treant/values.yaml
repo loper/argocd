@@ -1,0 +1,29 @@
+# Default values for rabbit.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+appName: treant
+namespace: treants
+replicaCount: 1
+
+image:
+  repository: gcr.io/kuar-demo/kuard-amd64
+  pullPolicy: IfNotPresent
+  tag: "blue"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: NodePort
+  webPort: 30555
