@@ -5,8 +5,8 @@ metadata:
   name: deimos-config
 data:
   TZ: "Europe/Warsaw"
-  APP: "deimo"
-  DEPLOYMENT: "deimo-acd"
-  GIT_USER: "deimos"
+  APP: "treant"
+  DEPLOYMENT: "treant-acd"
+  GIT_USER: "loper"
   MAX_WAIT: "40"
-  NAMESPACE: "deimos"
+  NAMESPACE: "treants"
