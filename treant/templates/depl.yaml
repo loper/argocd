@@ -33,7 +33,7 @@ spec:
               path: '/ready'
               port: 8080
             initialDelaySeconds: 4
-            periodSeconds: 55
+            periodSeconds: 35
             successThreshold: 1
             timeoutSeconds: 10
           livenessProbe:
