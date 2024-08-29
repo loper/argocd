@@ -21,6 +21,9 @@ spec:
           name: {{ .Values.appName }}
           ports:
             - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: {{ .Values.vault_secret_test }}
           resources:
             limits:
               cpu: 500m
@@ -33,7 +36,7 @@ spec:
               path: '/ready'
               port: 8080
             initialDelaySeconds: 4
-            periodSeconds: 35
+            periodSeconds: 55
             successThreshold: 1
             timeoutSeconds: 10
           livenessProbe:

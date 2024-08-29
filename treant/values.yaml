@@ -5,11 +5,12 @@
 appName: treant
 namespace: treants
 replicaCount: 1
+vault_secret_test: k8s-external
 
 image:
   repository: gcr.io/kuar-demo/kuard-amd64
   pullPolicy: IfNotPresent
-  tag: "purple"
+  tag: "blue"
 
 podAnnotations: {}
 
