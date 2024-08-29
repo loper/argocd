@@ -5,7 +5,7 @@ metadata:
   name: deimos-config
 data:
   TZ: "Europe/Warsaw"
-  APP: "alle-uat"
+  APP: "alle-mail"
   DEPLOYMENT: {{ .Values.image_D.name }}
   GIT_USER: "deimos"
   MAX_WAIT: "40"
