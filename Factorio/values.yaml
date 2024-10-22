@@ -10,6 +10,7 @@ app:
   log_file: "/factorio/factorio_current.log"
 
 limits:
+  initial_delay: 200
   mem_min: "1000Mi"
   mem_max: "5500Mi"
   cpu_min: "100m"
