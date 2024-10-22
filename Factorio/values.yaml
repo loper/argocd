@@ -31,7 +31,8 @@ net:
   external_port_udp: 34197
 
 game:
-  update_mods: "true"
+  update_mods: "false"
+  wait_for_port: "false"
 
 storage:
   host_path: "/opt/FACTORIO/k8s"
