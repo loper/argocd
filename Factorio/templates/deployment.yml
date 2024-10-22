@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.name }}
-          command: ["/bin/sh"]
+          # command: ["/bin/sh"]
           # args: ["-c", "while true; do echo hello; sleep 100; done"]
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}

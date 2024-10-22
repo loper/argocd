@@ -32,7 +32,7 @@ net:
 
 game:
   update_mods: "false"
-  wait_for_port: "false"
+  wait_for_port: "true"
 
 storage:
   host_path: "/opt/FACTORIO/k8s"
