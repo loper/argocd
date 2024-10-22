@@ -17,8 +17,8 @@ limits:
 
 image:
   repository: "factoriotools/factorio"
-  tag: "1.1.80"
-  pullPolicy: IfNotPresent
+  tag: "2"
+  pullPolicy: Always
   replicas: 1
   cm: "config"
 
@@ -30,7 +30,7 @@ net:
   external_port_udp: 34197
 
 game:
-  update_mods: "false"
+  update_mods: "true"
 
 storage:
   host_path: "/opt/FACTORIO/k8s"
