@@ -34,7 +34,7 @@ spec:
                 securityContext:
                     allowPrivilegeEscalation: false
                     runAsNonRoot: true
-                    runAsUser: 500
+                    runAsUser: 1500
                     runAsGroup: 10500
             
           imagePullSecrets:
