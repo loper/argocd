@@ -32,11 +32,12 @@ spec:
                     memory: {{ .Values.limits.mem_max }}
                     cpu: {{ .Values.limits.cpu_max }}
                 securityContext:
-                  allowPrivilegeEscalation: false
-                  runAsNonRoot: true
-                  runAsUser: 500
-                  runAsGroup: 10500
-                      imagePullSecrets:
+                    allowPrivilegeEscalation: false
+                    runAsNonRoot: true
+                    runAsUser: 500
+                    runAsGroup: 10500
+            
+          imagePullSecrets:
             - name: {{ .Values.image.pullSecrets }}
             
           restartPolicy: Never
