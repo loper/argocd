@@ -36,10 +36,7 @@ spec:
                   runAsNonRoot: true
                   runAsUser: 500
                   runAsGroup: 10500
-          # nodeSelector:
-          #   kubernetes.io/hostname: "{{ .Values.node }}"
-            
-          imagePullSecrets:
+                      imagePullSecrets:
             - name: {{ .Values.image.pullSecrets }}
             
           restartPolicy: Never
