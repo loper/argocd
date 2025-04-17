@@ -32,10 +32,12 @@ spec:
                     memory: {{ .Values.limits.mem_max }}
                     cpu: {{ .Values.limits.cpu_max }}
                 securityContext:
-                    allowPrivilegeEscalation: false
-                    runAsNonRoot: true
-                    runAsUser: 500
-                    runAsGroup: 10500
+                  allowPrivilegeEscalation: false
+                  runAsNonRoot: true
+                  runAsUser: 500
+                  runAsGroup: 10500
+          # nodeSelector:
+          #   kubernetes.io/hostname: "{{ .Values.node }}"
             
           imagePullSecrets:
             - name: {{ .Values.image.pullSecrets }}
