@@ -15,8 +15,6 @@ spec:
               - name: {{ .Values.image_G.name }}
                 image: "{{ .Values.image_G.repository }}:{{ .Values.image.tag }}"
                 imagePullPolicy: {{ .Values.image.pullPolicy }}
-                command: ["/bin/sh"]
-                args: ["-c", "sleep 3000"]
                 tty: true
                 envFrom:
                   - configMapRef:
@@ -36,7 +34,7 @@ spec:
                 securityContext:
                     allowPrivilegeEscalation: false
                     runAsNonRoot: true
-                    runAsUser: 1500
+                    runAsUser: 500
                     runAsGroup: 10500
             
           imagePullSecrets:
