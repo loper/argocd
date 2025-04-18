@@ -65,6 +65,7 @@ image_F:
   secret: token-03
   schedule: "*/47 * * * *" # every 47 minutes
   suspend: false
+  pullPolicy: IfNotPresent
 
 image_G:
   name: 07-resync
