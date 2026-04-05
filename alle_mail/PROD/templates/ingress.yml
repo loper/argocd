@@ -4,7 +4,7 @@ metadata:
   name: ingress-fanout
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    traefik.ingress.kubernetes.io/router.entrypoints: custom-port
+    kubernetes.io/ingress.class: traefik
 spec:
   rules:
     - host: "{{ .Values.namespace }}.anoia.eu"
@@ -13,8 +13,6 @@ spec:
           - path: /
             pathType: Prefix
             backend:
-              # serviceName: mtg
-              # servicePort: 80
               service:
                 name: {{ .Values.name }}
                 port: 
