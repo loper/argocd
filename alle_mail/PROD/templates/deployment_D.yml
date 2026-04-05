@@ -2,39 +2,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.image_D.name }}
+  name: { { .Values.image_D.name } }
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.image_D.name }}
-  replicas: {{ .Values.image_D.replicas }}
+      app: { { .Values.image_D.name } }
+  replicas: { { .Values.image_D.replicas } }
   template:
     metadata:
       labels:
-        app: {{ .Values.image_D.name }}
+        app: { { .Values.image_D.name } }
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - halina512
       containers:
-        - name: {{ .Values.image_D.name }}
+        - name: { { .Values.image_D.name } }
           image: "{{ .Values.image_D.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: { { .Values.image.pullPolicy } }
           # command: [ "/bin/sh", "-c", "--" ]
           # args: [ "while true; do sleep 30; done;" ]
           tty: true
           envFrom:
             - configMapRef:
-                name: {{ .Values.image_D.cm }}
+                name: { { .Values.image_D.cm } }
             - secretRef:
-                name: {{ .Values.image_D.secret }}
+                name: { { .Values.image_D.secret } }
           env:
             - name: IMAGE_TAG
-              value: {{ .Values.image.tag }}
+              value: { { .Values.image.tag } }
           resources:
             requests:
-              memory: {{ .Values.limits.mem_min }}
-              cpu: {{ .Values.limits.cpu_min }}
+              memory: { { .Values.limits.mem_min } }
+              cpu: { { .Values.limits.cpu_min } }
             limits:
-              memory: {{ .Values.limits.mem_max }}
-              cpu: {{ .Values.limits.cpu_max }}
+              memory: { { .Values.limits.mem_max } }
+              cpu: { { .Values.limits.cpu_max } }
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -42,16 +51,16 @@ spec:
             runAsGroup: 10500
           livenessProbe:
             httpGet:
-              path: {{ .Values.image_D.health_probe }}
-              port: {{ .Values.image_D.internal_port }}
+              path: { { .Values.image_D.health_probe } }
+              port: { { .Values.image_D.internal_port } }
             initialDelaySeconds: 20
             periodSeconds: 60
           readinessProbe:
             httpGet:
-              path: {{ .Values.image_D.health_probe }}
-              port: {{ .Values.image_D.internal_port }}
+              path: { { .Values.image_D.health_probe } }
+              port: { { .Values.image_D.internal_port } }
             initialDelaySeconds: 10
             periodSeconds: 60
 
       imagePullSecrets:
-        - name: {{ .Values.image.pullSecrets }}
+        - name: { { .Values.image.pullSecrets } }
