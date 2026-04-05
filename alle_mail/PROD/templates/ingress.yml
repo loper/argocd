@@ -4,6 +4,7 @@ metadata:
   name: ingress-fanout
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    traefik.ingress.kubernetes.io/router.entrypoints: custom-port
 spec:
   rules:
     - host: "{{ .Values.namespace }}.anoia.eu"
