@@ -4,7 +4,7 @@ metadata:
   name: ingress-fanout
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    kubernetes.io/ingress.class: traefik
+    # kubernetes.io/ingress.class: traefik
 spec:
   rules:
     - host: "{{ .Values.namespace }}.anoia.eu"
