@@ -8,6 +8,7 @@ TZ: Europe/Warsaw
 node: "baldur"
 node_mail: "baldur"
 node_tracker: "baldur"
+traefik_node: "halina512"
 
 app:
   log_file: "/home/mailer/log/output.log"
