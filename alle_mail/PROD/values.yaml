@@ -20,7 +20,7 @@ limits:
   cpu_max: "500m"
 
 image:
-  tag: "b960a258"
+  tag: "bb424157"
   pullPolicy: Always
   pullSecrets: gitlab
 
