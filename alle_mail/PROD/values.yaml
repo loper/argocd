@@ -55,11 +55,6 @@ image_D:
   external_port: 40055
   health_probe: /health
 
-image_E:
-  name: 05-repeater
-  cm: config-05
-  replicas: 1
-
 image_F:
   name: 06-tracker
   repository: registry.gitlab.com/k8s45/alle_mail/06_tracker
