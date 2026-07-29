@@ -2,25 +2,25 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ .Values.image_G.name }}
+  name: {{ .Values.image_F.name }}
 spec:
-  schedule: "{{ .Values.image_G.schedule }}"
+  schedule: "{{ .Values.image_F.schedule }}"
   jobTemplate:
     spec:
-      suspend: {{ .Values.image_G.suspend }}
+      suspend: {{ .Values.image_F.suspend }}
       ttlSecondsAfterFinished: 3000
       template:
         spec:
           containers:
-              - name: {{ .Values.image_G.name }}
-                image: "{{ .Values.image_G.repository }}:{{ .Values.image.tag }}"
-                imagePullPolicy: {{ .Values.image.pullPolicy }}
+              - name: {{ .Values.image_F.name }}
+                image: "{{ .Values.image_F.repository }}:{{ .Values.image.tag }}"
+                imagePullPolicy: {{ .Values.image_F.pullPolicy }}
                 tty: true
                 envFrom:
                   - configMapRef:
-                      name: {{ .Values.image_G.cm }}
+                      name: {{ .Values.image_F.cm }}
                   - secretRef:
-                      name: {{ .Values.image_G.secret }}
+                      name: {{ .Values.image_F.secret }}
                 env:
                   - name: IMAGE_TAG
                     value: {{ .Values.image.tag }}
@@ -34,11 +34,13 @@ spec:
                 securityContext:
                   allowPrivilegeEscalation: false
                   runAsNonRoot: true
-                  runAsUser: 500
+                  runAsUser: 1500
                   runAsGroup: 10500
-          # nodeSelector:
-          #   kubernetes.io/hostname: "{{ .Values.node }}"
-            
+{{- with .Values.nodes.tracker }}
+          nodeSelector:
+            kubernetes.io/hostname: {{ . | quote }}
+{{- end }}
+
           imagePullSecrets:
             - name: {{ .Values.image.pullSecrets }}
             

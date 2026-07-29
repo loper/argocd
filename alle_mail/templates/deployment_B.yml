@@ -2,29 +2,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.image_C.name }}
+  name: {{ .Values.image_B.name }}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.image_C.name }}
-  replicas: {{ .Values.image_C.replicas }}
+      app: {{ .Values.image_B.name }}
+  replicas: {{ .Values.image_B.replicas }}
   template:
     metadata:
       labels:
-        app: {{ .Values.image_C.name }}
+        app: {{ .Values.image_B.name }}
     spec:
       containers:
-        - name: {{ .Values.image_C.name }}
-          image: "{{ .Values.image_C.repository }}:{{ .Values.image.tag }}"
+        - name: {{ .Values.image_B.name }}
+          image: "{{ .Values.image_B.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           # command: [ "/bin/sh", "-c", "--" ]
           # args: [ "while true; do sleep 30; done;" ]
           tty: true
           envFrom:
             - configMapRef:
-                name: {{ .Values.image_C.cm }}
+                name: {{ .Values.image_B.cm }}
             - secretRef:
-                name: {{ .Values.image_C.secret }}
+                name: {{ .Values.image_B.secret }}
           resources:
             requests:
               memory: {{ .Values.limits.mem_min }}
@@ -37,13 +37,21 @@ spec:
             runAsNonRoot: true
             runAsUser: 500
             runAsGroup: 10500
+          # O12: `tail` only proved the process was alive, not that the
+          # consumer wasn't wedged on one message — the marker file is
+          # only touched after a message finishes processing (02's
+          # touch_liveness()). 30 min window matches this image's own
+          # Dockerfile HEALTHCHECK.
           livenessProbe:
             exec:
               command:
-                - tail
-                - {{ .Values.app.log_file }}
-            initialDelaySeconds: 10
-            periodSeconds: 55
-
+                - sh
+                - -c
+                - '[ -n "$(find /home/mailer/healthy -mmin -30)" ]'
+            initialDelaySeconds: 30
+            periodSeconds: 60
+        
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}
+
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}

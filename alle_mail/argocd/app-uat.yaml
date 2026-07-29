@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: alle-mail-uat
+  namespace: argo
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:loper/argocd.git
+    targetRevision: HEAD
+    path: alle_mail
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-uat.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: alle-uat
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

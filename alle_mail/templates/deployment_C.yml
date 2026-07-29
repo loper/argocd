@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.image_C.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.image_C.name }}
+  replicas: {{ .Values.image_C.replicas }}
+  # O19: at replicas 1, the default RollingUpdate's maxSurge:1 starts the
+  # new pod before killing the old one — briefly two writers, exactly the
+  # race the single-replica decision (values.yaml) is meant to remove.
+  # Recreate guarantees the old pod is gone first; the short write gap is
+  # harmless since messages wait in a durable queue (Etap 3).
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.image_C.name }}
+    spec:
+      containers:
+        - name: {{ .Values.image_C.name }}
+          image: "{{ .Values.image_C.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # command: [ "/bin/sh", "-c", "--" ]
+          # args: [ "while true; do sleep 30; done;" ]
+          tty: true
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.image_C.cm }}
+            - secretRef:
+                name: {{ .Values.image_C.secret }}
+          resources:
+            requests:
+              memory: {{ .Values.limits.mem_min }}
+              cpu: {{ .Values.limits.cpu_min }}
+            limits:
+              memory: {{ .Values.limits.mem_max }}
+              cpu: {{ .Values.limits.cpu_max }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 500
+            runAsGroup: 10500
+          # O12: a stuck consumer still holds the log file open and keeps
+          # appending to it, so `tail` never noticed a wedged pod — only
+          # that the process was alive. The marker file is only touched
+          # after a message finishes processing (03_atable.py's
+          # touch_liveness()), so a stale marker means genuinely stuck,
+          # not just quiet. 30 min window matches this image's own
+          # Dockerfile HEALTHCHECK.
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - '[ -n "$(find /home/mailer/healthy -mmin -30)" ]'
+            initialDelaySeconds: 30
+            periodSeconds: 60
+        
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecrets }}
+
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}

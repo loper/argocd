@@ -1,0 +1,30 @@
+# PROD overrides. Everything else comes from values.yaml.
+
+namespace: alle-mail
+
+image:
+  tag: "6bd76f59" # updated by deploy_prod.sh
+
+nodes:
+  tracker: "baldur"
+  traefik: "halina512"
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+
+image_B:
+  replicas: 3
+
+image_D:
+  replicas: 3
+  external_port: 40055
+
+image_F:
+  schedule: "*/47 * * * *" # every 47 minutes
+
+image_G:
+  schedule: "*/56 * * * *" # every 56 minutes
+
+vault:
+  mount_point: "alle"

@@ -37,13 +37,23 @@ spec:
             runAsNonRoot: true
             runAsUser: 500
             runAsGroup: 10500
-          # livenessProbe:
-          #   exec:
-          #     command:
-          #       - tail
-          #       - {{ .Values.app.log_file }}
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 55
+          # O12: previously disabled entirely (the commented-out `tail`
+          # probe below would only have proven the process alive anyway,
+          # not that search_imap()'s poll loop wasn't wedged). The marker
+          # file is touched once per poll cycle (01's touch_liveness()).
+          # 10 min window / 30s interval matches this image's own
+          # Dockerfile HEALTHCHECK — shorter than 02/03 since 01's poll
+          # loop is expected to stay consistently active.
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - '[ -n "$(find /home/mailer/healthy -mmin -10)" ]'
+            initialDelaySeconds: 30
+            periodSeconds: 30
 
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}
+
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}

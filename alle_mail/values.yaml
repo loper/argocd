@@ -1,12 +1,10 @@
-# Default values for gk_xml.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# Common values for alle_mail — shared by every environment.
+# Environment-specific overrides live in values-uat.yaml / values-prod.yaml.
+# This file alone does not render a complete release: namespace and image.tag
+# come from the environment file, so always pass -f values-<env>.yaml.
 
 name: alle-mail
-namespace: alle-uat
 TZ: Europe/Warsaw
-node: "k102"
-node_mail: "k141"
 revisionHistoryLimit: 2
 
 app:
@@ -19,9 +17,18 @@ limits:
   cpu_max: "500m"
 
 image:
-  tag: "6bd76f59"
+  # tag is set per environment by the deploy scripts
   pullPolicy: Always
   pullSecrets: gitlab
+
+# Pin a workload to a node. null means no nodeSelector at all.
+nodes:
+  tracker: null # cronJob_F, cronJob_G
+  traefik: null # deployment_D
+
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 
 image_A:
   name: 01-mail
@@ -42,7 +49,12 @@ image_C:
   repository: registry.gitlab.com/k8s45/alle_mail/03_atable
   cm: config-03
   secret: token-03
-  replicas: 3
+  # Etap 6a: 03 is the sole NocoDB writer, so a second replica would mean
+  # two writers racing with no compare-and-swap on the NocoDB side. Paired
+  # with strategy: Recreate (deployment_C.yml) so a rollout can't briefly
+  # run two pods either, and O12's marker-file liveness probe so a single
+  # wedged pod still gets recovered automatically.
+  replicas: 1
 
 image_D:
   name: 04-status
@@ -55,6 +67,7 @@ image_D:
   health_probe: /health
 
 image_E:
+  enabled: false
   name: 05-repeater
   cm: config-05
   replicas: 1
@@ -77,9 +90,8 @@ image_G:
   suspend: false
 
 vault:
-  mount_point: "alle_dev"
   common: "common"
   path_01: "mail"
   path_02: null
   path_03: "airtable"
-  path_04: null
+  path_04: "airtable"

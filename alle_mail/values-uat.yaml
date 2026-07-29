@@ -1,0 +1,13 @@
+# UAT overrides. Everything else comes from values.yaml.
+
+namespace: alle-uat
+
+image:
+  tag: "6bd76f59" # updated by deploy_to_uat.sh
+
+# 05-repeater runs in UAT only
+image_E:
+  enabled: true
+
+vault:
+  mount_point: "alle_dev"
