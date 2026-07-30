@@ -36,9 +36,11 @@ spec:
             requests:
               memory: {{ .Values.limits.mem_min }}
               cpu: {{ .Values.limits.cpu_min }}
+              ephemeral-storage: {{ .Values.limits.ephemeral_min }}
             limits:
               memory: {{ .Values.limits.mem_max }}
               cpu: {{ .Values.limits.cpu_max }}
+              ephemeral-storage: {{ .Values.limits.ephemeral_max }}
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true

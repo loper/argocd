@@ -5,10 +5,16 @@ metadata:
   name: {{ .Values.image_G.name }}
 spec:
   schedule: "{{ .Values.image_G.schedule }}"
+  # O15: a wedged run would otherwise pile up alongside the next
+  # scheduled trigger instead of being replaced by it.
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       suspend: {{ .Values.image_G.suspend }}
       ttlSecondsAfterFinished: 3000
+      # O15: kills a wedged run so it doesn't sit there forever blocking
+      # every later trigger via concurrencyPolicy: Forbid above.
+      activeDeadlineSeconds: {{ .Values.image_G.activeDeadlineSeconds }}
       template:
         spec:
           containers:
@@ -28,9 +34,11 @@ spec:
                   requests:
                     memory: {{ .Values.limits.mem_min }}
                     cpu: {{ .Values.limits.cpu_min }}
+                    ephemeral-storage: {{ .Values.limits.ephemeral_min }}
                   limits:
                     memory: {{ .Values.limits.mem_max }}
                     cpu: {{ .Values.limits.cpu_max }}
+                    ephemeral-storage: {{ .Values.limits.ephemeral_max }}
                 securityContext:
                   allowPrivilegeEscalation: false
                   runAsNonRoot: true

@@ -11,10 +11,21 @@ app:
   log_file: "/home/mailer/log/output.log"
 
 limits:
+  # O16: reviewed after CACHE became bounded (01_monitor_email.py's
+  # CACHE_MAXLEN=5000 — a few hundred KB of hashes at most, not the
+  # unbounded growth O16 originally flagged). mem_max still comfortably
+  # covers IMAP/email-body handling, so left unchanged.
   mem_min: "50Mi"
   mem_max: "550Mi"
   cpu_min: "100m"
   cpu_max: "500m"
+  # O16: no pod here writes to a volume (O18 removed the last file log),
+  # so this only guards against the container's writable layer growing
+  # unbounded (stray temp files, a runaway log buffer) and starving the
+  # node. Sized in proportion to mem_min/mem_max above, not measured
+  # usage — there's no historical pressure on this axis.
+  ephemeral_min: "100Mi"
+  ephemeral_max: "500Mi"
 
 image:
   # tag is set per environment by the deploy scripts
@@ -80,6 +91,13 @@ image_F:
   schedule: "0 */3 * * *" # every 3 hours
   suspend: false
   pullPolicy: IfNotPresent
+  # O15: must stay well under the tightest schedule this image runs on
+  # (values-prod.yaml overrides to every 47 min = 2820s) so a wedged run
+  # is killed with margin before the next trigger, instead of Forbid
+  # skipping runs indefinitely. 30 min leaves ~17 min of headroom on
+  # PROD and is generous for the per-item scrape calls in 06_runner.py
+  # (15-20s timeouts each).
+  activeDeadlineSeconds: 1800
 
 image_G:
   name: 07-resync
@@ -88,6 +106,10 @@ image_G:
   secret: token-03
   schedule: "0 */2 * * *" # every 2 hours
   suspend: false
+  # O15: same reasoning as image_F.activeDeadlineSeconds — PROD overrides
+  # this image's schedule to every 56 min = 3360s, so 30 min leaves
+  # ~26 min of headroom before the next trigger.
+  activeDeadlineSeconds: 1800
 
 vault:
   common: "common"
