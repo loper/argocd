@@ -46,14 +46,35 @@ spec:
           # 10 min window / 30s interval matches this image's own
           # Dockerfile HEALTHCHECK — shorter than 02/03 since 01's poll
           # loop is expected to stay consistently active.
+          #
+          # startupProbe: until the marker exists at all, `find` fails
+          # outright, so liveness alone would kill a pod that is merely
+          # still starting — search_imap() can spend up to 300s in its
+          # own connect-failure backoff before the first cycle completes.
+          # Liveness is suspended until this succeeds once, so the pod
+          # only ever restarts for a genuinely stale marker.
+          startupProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - '[ -f /home/mailer/healthy ]'
+            periodSeconds: 10
+            failureThreshold: 60
+            timeoutSeconds: 5
           livenessProbe:
             exec:
               command:
                 - sh
                 - -c
                 - '[ -n "$(find /home/mailer/healthy -mmin -10)" ]'
-            initialDelaySeconds: 30
             periodSeconds: 30
+            failureThreshold: 3
+            # An exec probe that times out counts as a failure. Default
+            # 1s is not much headroom for forking a shell under this
+            # container's CPU limit when the node is busy — a throttled
+            # probe is not a wedged app.
+            timeoutSeconds: 5
 
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}

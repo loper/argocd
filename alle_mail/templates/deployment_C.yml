@@ -48,19 +48,42 @@ spec:
             runAsGroup: 10500
           # O12: a stuck consumer still holds the log file open and keeps
           # appending to it, so `tail` never noticed a wedged pod — only
-          # that the process was alive. The marker file is only touched
-          # after a message finishes processing (03_atable.py's
-          # touch_liveness()), so a stale marker means genuinely stuck,
-          # not just quiet. 30 min window matches this image's own
+          # that the process was alive. The marker file is touched after a
+          # message finishes processing, on connect, and on an idle tick
+          # driven by pika's own event loop (03_atable.py's
+          # touch_liveness()/schedule_idle_liveness()), so a stale marker
+          # means genuinely stuck. 30 min window matches this image's own
           # Dockerfile HEALTHCHECK.
+          #
+          # "not just quiet" was the intent from the start but not the
+          # behaviour: without the idle tick the marker only appeared once
+          # a message had been processed, so a quiet queue read as stuck
+          # and the pod was killed ~2.5 min after every start (198
+          # restarts in 23h on PROD, none a real fault). startupProbe
+          # covers the window before the marker first exists, when `find`
+          # fails outright; liveness stays suspended until it succeeds.
+          startupProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - '[ -f /home/mailer/healthy ]'
+            periodSeconds: 10
+            failureThreshold: 60
+            timeoutSeconds: 5
           livenessProbe:
             exec:
               command:
                 - sh
                 - -c
                 - '[ -n "$(find /home/mailer/healthy -mmin -30)" ]'
-            initialDelaySeconds: 30
             periodSeconds: 60
+            failureThreshold: 3
+            # An exec probe that times out counts as a failure. Default
+            # 1s is not much headroom for forking a shell under this
+            # container's CPU limit when the node is busy — a throttled
+            # probe is not a wedged app.
+            timeoutSeconds: 5
         
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}

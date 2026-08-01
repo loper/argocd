@@ -41,17 +41,41 @@ spec:
             runAsGroup: 10500
           # O12: `tail` only proved the process was alive, not that the
           # consumer wasn't wedged on one message — the marker file is
-          # only touched after a message finishes processing (02's
-          # touch_liveness()). 30 min window matches this image's own
-          # Dockerfile HEALTHCHECK.
+          # touched after a message finishes processing, on connect, and
+          # on an idle tick driven by pika's own event loop (02's
+          # touch_liveness()/schedule_idle_liveness()). 30 min window
+          # matches this image's own Dockerfile HEALTHCHECK.
+          #
+          # The idle tick is what makes this probe mean "wedged" rather
+          # than "quiet": before it existed the marker only appeared once
+          # a message had been processed, so with 3 replicas splitting a
+          # low-volume queue every replica was killed ~2.5 min after each
+          # start — 260 restarts in 23h on PROD, none a real fault.
+          # startupProbe covers the window before the marker first exists,
+          # when `find` fails outright; liveness stays suspended until it
+          # succeeds once.
+          startupProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - '[ -f /home/mailer/healthy ]'
+            periodSeconds: 10
+            failureThreshold: 60
+            timeoutSeconds: 5
           livenessProbe:
             exec:
               command:
                 - sh
                 - -c
                 - '[ -n "$(find /home/mailer/healthy -mmin -30)" ]'
-            initialDelaySeconds: 30
             periodSeconds: 60
+            failureThreshold: 3
+            # An exec probe that times out counts as a failure. Default
+            # 1s is not much headroom for forking a shell under this
+            # container's CPU limit when the node is busy — a throttled
+            # probe is not a wedged app.
+            timeoutSeconds: 5
         
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}
