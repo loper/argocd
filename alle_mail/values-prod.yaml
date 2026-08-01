@@ -3,7 +3,7 @@
 namespace: alle-mail
 
 image:
-  tag: "9230a7e1" # updated by deploy_prod.sh
+  tag: "ad9190fb" # updated by deploy_prod.sh
 
 nodes:
   tracker: "baldur"
