@@ -5,6 +5,10 @@ metadata:
   annotations:
     {{- toYaml .Values.ingress.annotations | nindent 4 }}
 spec:
+  tls:
+    - hosts:
+        - "{{ .Values.namespace }}.anoia.eu"
+      secretName: "{{ .Values.namespace }}-tls"
   rules:
     - host: "{{ .Values.namespace }}.anoia.eu"
       http:
