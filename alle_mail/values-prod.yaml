@@ -9,10 +9,6 @@ nodes:
   tracker: "baldur"
   traefik: "halina512"
 
-ingress:
-  annotations:
-    kubernetes.io/ingress.class: traefik
-
 image_B:
   replicas: 3
 

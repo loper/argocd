@@ -37,10 +37,6 @@ nodes:
   tracker: null # cronJob_F, cronJob_G
   traefik: null # deployment_D
 
-ingress:
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-
 image_A:
   name: 01-mail
   repository: registry.gitlab.com/k8s45/alle_mail/01_mail

@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingress-fanout
+spec:
+  entryPoints:
+    - web
+    - websecure
+    - webcustom
+  routes:
+    - match: Host(`{{ .Values.namespace }}.anoia.eu`) && PathPrefix(`/`)
+      kind: Rule
+      services:
+        - name: {{ .Values.name }}
+          port: {{ .Values.image_D.external_port }}
+  tls:
+    secretName: "{{ .Values.namespace }}-tls"
