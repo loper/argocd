@@ -3,7 +3,7 @@
 namespace: alle-mail
 
 image:
-  tag: "39202f0a" # updated by deploy_prod.sh
+  tag: "a7f09cb9" # updated by deploy_prod.sh
 
 nodes:
   tracker: "baldur"
@@ -17,10 +17,14 @@ image_D:
   external_port: 40055
 
 image_F:
-  schedule: "*/47 * * * *" # every 47 minutes
+  # Once an hour. "*/47" is minute 0 and minute 47, a 13-minute gap,
+  # which is shorter than activeDeadlineSeconds, so Forbid skips the next run.
+  schedule: "5 * * * *"
 
 image_G:
-  schedule: "*/56 * * * *" # every 56 minutes
+  # Once an hour, after the tracker's 30-minute budget. "*/56" is minute 0
+  # and minute 56, a 4-minute gap, so the same skip happens.
+  schedule: "40 * * * *"
 
 vault:
   mount_point: "alle"
