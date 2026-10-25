@@ -1,9 +1,0 @@
-{{- if .Values.image_E.enabled }}
----
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: config-05
-data:
-  REPEATER: "True"
-{{- end }}
