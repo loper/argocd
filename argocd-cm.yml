@@ -1,16 +1,39 @@
+# Source of truth for baldur's argocd-cm (namespace argocd).
+# Apply: kubectl --context baldur -n argocd apply -f argocd-cm.yml
+# After changing resource.exclusions, restart argocd-application-controller
+# so the informer cache drops previously watched kinds.
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"argocd-cm","app.kubernetes.io/part-of":"argocd"},"name":"argocd-cm","namespace":"argo"}}
-  creationTimestamp: "2023-04-28T09:58:38Z"
+  name: argocd-cm
+  namespace: argocd
   labels:
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
-  name: argocd-cm
-  namespace: argo
-  resourceVersion: "143395"
-  uid: cdb14725-2397-4ff0-b492-45c6bccbb435
-  data:
-    accounts.admin: apiKey, login
+data:
+  accounts.admin: apiKey, login
+  # Setting this key replaces Argo CD's built-in defaults — keep the
+  # high-churn kinds below, and add Job so CronJob children never enter
+  # the resource tree (TTL'd Jobs were stuck as "Pending deletion" /
+  # undefined/undefined ghosts in Redis).
+  resource.exclusions: |
+    - apiGroups:
+      - ""
+      - discovery.k8s.io
+      kinds:
+      - Endpoints
+      - EndpointSlice
+      clusters:
+      - "*"
+    - apiGroups:
+      - coordination.k8s.io
+      kinds:
+      - Lease
+      clusters:
+      - "*"
+    - apiGroups:
+      - batch
+      kinds:
+      - Job
+      clusters:
+      - "*"
