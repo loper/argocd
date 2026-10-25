@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: deimos-config
+data:
+  APP: {{ .Values.namespace | quote }}
+  DEPLOYMENT: {{ printf "%s,%s,%s,%s" .Values.image_A.name .Values.image_B.name .Values.image_C.name .Values.image_D.name | quote }}
+  SYNC_TIMEOUT: "420"
+  ROLLOUT_TIMEOUT: "180"
+  HEALTH_WINDOW: "30"
