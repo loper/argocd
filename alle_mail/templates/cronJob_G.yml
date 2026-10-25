@@ -8,10 +8,14 @@ spec:
   # O15: a wedged run would otherwise pile up alongside the next
   # scheduled trigger instead of being replaced by it.
   concurrencyPolicy: Forbid
+  # Keep no finished Jobs/Pods in history — ArgoCD UI otherwise shows
+  # TTL'd children as "Pending deletion" / undefined/undefined.
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 0
   jobTemplate:
     spec:
       suspend: {{ .Values.image_G.suspend }}
-      ttlSecondsAfterFinished: 3000
+      ttlSecondsAfterFinished: 60
       # O15: kills a wedged run so it doesn't sit there forever blocking
       # every later trigger via concurrencyPolicy: Forbid above.
       activeDeadlineSeconds: {{ .Values.image_G.activeDeadlineSeconds }}
